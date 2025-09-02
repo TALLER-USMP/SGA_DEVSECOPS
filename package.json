@@ -1,5 +1,5 @@
 {
-  "name": "",
+  "name": "core-gestion",
   "version": "1.0.0",
   "description": "",
   "main": "dist/src/functions/*.js",
@@ -9,7 +9,10 @@
     "clean": "rimraf dist",
     "prestart": "npm run clean && npm run build",
     "start": "func start",
-    "test": "echo \"No tests yet...\""
+    "format:write": "npx prettier . --write",
+    "format:check": "npx prettier . --check",
+    "test": "echo \"No tests yet...\"",
+    "prepare": "husky"
   },
   "dependencies": {
     "@azure/functions": "^4.0.0",
@@ -23,6 +26,8 @@
     "@types/pg": "^8.15.5",
     "azure-functions-core-tools": "^4.x",
     "drizzle-kit": "^0.31.4",
+    "husky": "^9.1.7",
+    "prettier": "3.6.2",
     "rimraf": "^5.0.0",
     "tsx": "^4.20.5",
     "typescript": "^4.0.0"

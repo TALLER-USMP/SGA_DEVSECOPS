@@ -24,7 +24,6 @@ const controllersDir = __dirname;
 loadControllers(controllersDir);
 bootstrapApp(app);
 
-
 // health api
 app.http("health", {
   methods: ["GET"],
@@ -36,9 +35,9 @@ app.http("health", {
         status: STATUS_CODES.OK,
         jsonBody: {
           message: `Api healthy`,
-          response
-        }
-      }
+          response,
+        },
+      };
     } catch (error) {
       console.log(error);
       if (error instanceof AppError) {
@@ -48,10 +47,10 @@ app.http("health", {
           status: STATUS_CODES.INTERNAL_SERVER_ERROR,
           jsonBody: {
             code: "INTERAL_SERVER_ERROR",
-            message: "Un error desconocido ha ocurrido"
-          }
-        }
+            message: "Un error desconocido ha ocurrido",
+          },
+        };
       }
     }
-  }
+  },
 });
