@@ -7,7 +7,7 @@ on:
 
 env:
   AZURE_FUNCTIONAPP_NAME: "Pruebadeploy4"
-  AZURE_FUNCTIONAPP_PACKAGE_PATH: "./dist"
+  AZURE_FUNCTIONAPP_PACKAGE_PATH: "."
   NODE_VERSION: "22.x"
   RESOURCE_GROUP: "Pruebadeploy4_group"
 
@@ -25,9 +25,9 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: ${{ env.NODE_VERSION }}
-          cache: 'npm'
-          cache-dependency-path: 'package-lock.json'
-       
+          cache: "npm"
+          cache-dependency-path: "package-lock.json"
+
       # 3️⃣ Instalar dependencias
       - name: Install dependencies
         run: npm ci
