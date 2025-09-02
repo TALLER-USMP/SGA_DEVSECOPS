@@ -22,7 +22,6 @@ export class SyllabusController implements BaseController {
     };
   }
 
-  @route("/{id}")
   async getOne(
     req: HttpRequest,
     context: InvocationContext,
@@ -30,7 +29,6 @@ export class SyllabusController implements BaseController {
     throw new Error("Method not implemented.");
   }
 
-  @route("/", "POST")
   async create(
     req: HttpRequest,
     context: InvocationContext,
@@ -38,7 +36,6 @@ export class SyllabusController implements BaseController {
     throw new Error("Method not implemented.");
   }
 
-  @route("/", "PUT")
   async update(
     req: HttpRequest,
     context: InvocationContext,
@@ -46,7 +43,6 @@ export class SyllabusController implements BaseController {
     throw new Error("Method not implemented.");
   }
 
-  @route("/", "DELETE")
   async delete(
     req: HttpRequest,
     context: InvocationContext,
