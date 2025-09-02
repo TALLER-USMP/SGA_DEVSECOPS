@@ -1,0 +1,81 @@
+name: Deploy Azure Function with RBAC
+
+on:
+  push:
+    branches:
+      - dev
+
+env:
+  AZURE_FUNCTIONAPP_NAME: 'Pruebadeploy4'
+  AZURE_FUNCTIONAPP_PACKAGE_PATH: './dist'
+  NODE_VERSION: '22.x'
+  RESOURCE_GROUP: 'Pruebadeploy4_group'
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+      # 1️⃣ Checkout del código
+      - name: Checkout repository
+        uses: actions/checkout@v4
+       
+      # 2️⃣ Configurar Node.js con caché
+      - name: Setup Node.js ${{ env.NODE_VERSION }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+          cache-dependency-path: 'package-lock.json'
+       
+      # 3️⃣ Instalar dependencias
+      - name: Install dependencies
+        run: npm ci
+       
+      # 4️⃣ Compilar proyecto TypeScript
+      - name: Build project
+        run: npm run build
+       
+      # 5️⃣ Login a Azure usando Service Principal
+      - name: Login to Azure
+        uses: azure/login@v2
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS2 }}
+       
+      # 6️⃣ Configurar runtime de Azure Function explícitamente
+      - name: Set Function App Runtime
+        run: |
+          az functionapp config appsettings set \
+            --name ${{ env.AZURE_FUNCTIONAPP_NAME }} \
+            --resource-group ${{ env.RESOURCE_GROUP }} \
+            --settings FUNCTIONS_NODE_VERSION=~20 \
+                      WEBSITE_NODE_DEFAULT_VERSION=~20 \
+                      FUNCTIONS_EXTENSION_VERSION=~4
+       
+      # 7️⃣ Desplegar usando Azure Functions Action con RBAC
+      - name: Deploy to Azure Function
+        uses: azure/functions-action@v1
+        with:
+          app-name: ${{ env.AZURE_FUNCTIONAPP_NAME }}
+          package: ${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}
+          slot-name: 'production'
+          respect-funcignore: true
+       
+      # 8️⃣ Verificar el estado del deployment
+      - name: Verify deployment
+        run: |
+          echo "Checking function app status..."
+          az functionapp show \
+            --name ${{ env.AZURE_FUNCTIONAPP_NAME }} \
+            --resource-group ${{ env.RESOURCE_GROUP }} \
+            --query "state"
+          echo "Listing available functions:"
+          az functionapp function list \
+            --name ${{ env.AZURE_FUNCTIONAPP_NAME }} \
+            --resource-group ${{ env.RESOURCE_GROUP }} \
+            --query "[].name"
+       
+      # 9️⃣ Logout de Azure
+      - name: Logout from Azure
+        if: always()
+        run: az logout
