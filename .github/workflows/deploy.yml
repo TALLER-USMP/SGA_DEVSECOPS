@@ -8,29 +8,33 @@ on:
 env:
   AZURE_FUNCTIONAPP_NAME: 'silabosUsmp'
   AZURE_FUNCTIONAPP_PACKAGE_PATH: './dist'
-  NODE_VERSION: '22.x'  # ✅ Versión LTS estable 20.x tambien funciona
+  NODE_VERSION: '20.x'
+  RESOURCE_GROUP: 'silabosUsmp_group'
 
 jobs:
   build-and-deploy:
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
     
     steps:
-      # 1️⃣ Descargar el código
+      # 1️⃣ Checkout del código
       - name: Checkout repository
         uses: actions/checkout@v4
        
-      # 2️⃣ Configurar Node.js
+      # 2️⃣ Configurar Node.js con caché
       - name: Setup Node.js ${{ env.NODE_VERSION }}
         uses: actions/setup-node@v4
         with:
           node-version: ${{ env.NODE_VERSION }}
           cache: 'npm'
-          cache-dependency-path: '${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}/package-lock.json'
+          cache-dependency-path: 'package-lock.json'
        
       # 3️⃣ Instalar dependencias
       - name: Install dependencies
-        working-directory: ${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}
         run: npm ci
+       
+      # 4️⃣ Compilar proyecto TypeScript
+      - name: Build project
+        run: npm run build
        
       # 5️⃣ Login a Azure usando Service Principal
       - name: Login to Azure
@@ -41,13 +45,12 @@ jobs:
       # 6️⃣ Configurar runtime de Azure Function explícitamente
       - name: Set Function App Runtime
         run: |
-          az functionapp config appsettings set `
-            --name ${{ env.AZURE_FUNCTIONAPP_NAME }} `
-            --resource-group silabosUsmp_group `
-            --settings "FUNCTIONS_NODE_VERSION=~20" `
-                      "WEBSITE_NODE_DEFAULT_VERSION=~20" `
-                      "FUNCTIONS_EXTENSION_VERSION=~4"
-        shell: powershell
+          az functionapp config appsettings set \
+            --name ${{ env.AZURE_FUNCTIONAPP_NAME }} \
+            --resource-group ${{ env.RESOURCE_GROUP }} \
+            --settings FUNCTIONS_NODE_VERSION=~20 \
+                      WEBSITE_NODE_DEFAULT_VERSION=~20 \
+                      FUNCTIONS_EXTENSION_VERSION=~4
        
       # 7️⃣ Desplegar usando Azure Functions Action con RBAC
       - name: Deploy to Azure Function
@@ -61,11 +64,18 @@ jobs:
       # 8️⃣ Verificar el estado del deployment
       - name: Verify deployment
         run: |
-          Write-Host "Checking function app status..."
-          az functionapp show --name ${{ env.AZURE_FUNCTIONAPP_NAME }} --resource-group silabosUsmp_group --query "state"
-        shell: powershell
+          echo "Checking function app status..."
+          az functionapp show \
+            --name ${{ env.AZURE_FUNCTIONAPP_NAME }} \
+            --resource-group ${{ env.RESOURCE_GROUP }} \
+            --query "state"
+          echo "Listing available functions:"
+          az functionapp function list \
+            --name ${{ env.AZURE_FUNCTIONAPP_NAME }} \
+            --resource-group ${{ env.RESOURCE_GROUP }} \
+            --query "[].name"
        
-      # 9️⃣ Logout de Azure (buena práctica de seguridad)
+      # 9️⃣ Logout de Azure
       - name: Logout from Azure
-        run: az logout
         if: always()
+        run: az logout
