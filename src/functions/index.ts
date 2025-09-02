@@ -7,22 +7,26 @@ import { AppError } from "../error";
 import { getDb } from "../db";
 import { sql } from "drizzle-orm";
 import { STATUS_CODES } from "../status-codes";
+import { SyllabusController } from "./syllabus/syllabus.controller";
+import { RouteDefinition } from "../lib/decorators";
 
-function loadControllers(dir: string) {
-  for (const file of fs.readdirSync(dir)) {
-    const fullPath = path.join(dir, file);
-    const stat = fs.statSync(fullPath);
+const controllers = [SyllabusController];
 
-    if (stat.isDirectory()) {
-      loadControllers(fullPath);
-    } else if (file.endsWith(".controller.js") || file.endsWith(".js")) {
-      require(fullPath);
-    }
+for (const currentClass of controllers) {
+  const prefix = Reflect.getMetadata("controller:prefix", currentClass);
+  const instance = new currentClass();
+  const routes: RouteDefinition[] =
+    Reflect.getMetadata("controller:routes", currentClass) || [];
+
+  for (const route of routes) {
+    app.http(`${prefix}_${route.handlerKey}`, {
+      methods: [route.method],
+      route: `${prefix}${route.path}`,
+      handler:
+        instance[route.handlerKey as keyof typeof instance].bind(instance),
+    });
   }
 }
-const controllersDir = __dirname;
-loadControllers(controllersDir);
-bootstrapApp(app);
 
 // health api
 app.http("health", {
