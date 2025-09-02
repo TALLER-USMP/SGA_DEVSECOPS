@@ -13,7 +13,7 @@ env:
 
 jobs:
   build-and-deploy:
-    runs-on: ubuntu-latest
+    runs-on: Windows
     
     steps:
       # 1️⃣ Checkout del código
