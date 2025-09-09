@@ -1,53 +1,51 @@
 import {
   HttpRequest,
-  HttpResponseInit,
   InvocationContext,
+  HttpResponseInit,
 } from "@azure/functions";
 import { BaseController } from "../../base-controller";
-import { auth, route, controller } from "../../lib/decorators";
-import { STATUS_CODES } from "../../status-codes";
+import { STATUS_CODES } from "http";
+import { auth, controller, route } from "../../lib/decorators";
 
-@controller("syllabus")
-export class SyllabusController implements BaseController {
-  @route("/")
-  async list(
+@controller("protect")
+export class ProtectController implements BaseController {
+  @route("/protected", "POST")
+  @auth(["Alumno", "Docente Contratado"])
+  protected(
     req: HttpRequest,
-    context: InvocationContext,
+    ctx: InvocationContext,
   ): Promise<HttpResponseInit> {
-    return {
-      status: STATUS_CODES.OK,
-      jsonBody: {
-        message: "acceso permitido",
-      },
-    };
+    return Promise.resolve({
+      status: 200,
+      jsonBody: { message: "acceso permitido" },
+    });
   }
 
-  @route("/{id}")
-  async getOne(
-    req: HttpRequest,
-    context: InvocationContext,
-  ): Promise<HttpResponseInit> {
-    throw new Error("Method not implemented.");
-  }
-
-  @route("/", "POST")
-  async create(
+  list(
     req: HttpRequest,
     context: InvocationContext,
   ): Promise<HttpResponseInit> {
     throw new Error("Method not implemented.");
   }
-
-  @route("/", "PUT")
-  async update(
+  getOne(
     req: HttpRequest,
     context: InvocationContext,
   ): Promise<HttpResponseInit> {
     throw new Error("Method not implemented.");
   }
-
-  @route("/", "DELETE")
-  async delete(
+  create(
+    req: HttpRequest,
+    context: InvocationContext,
+  ): Promise<HttpResponseInit> {
+    throw new Error("Method not implemented.");
+  }
+  update(
+    req: HttpRequest,
+    context: InvocationContext,
+  ): Promise<HttpResponseInit> {
+    throw new Error("Method not implemented.");
+  }
+  delete(
     req: HttpRequest,
     context: InvocationContext,
   ): Promise<HttpResponseInit> {

@@ -136,6 +136,9 @@ npm -v
 
 ```powershell
 Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned
+
+npm uninstall azure-functions-core-tools
+npm install azure-functions-core-tools@4 --save-dev
 ```
 
 ---
