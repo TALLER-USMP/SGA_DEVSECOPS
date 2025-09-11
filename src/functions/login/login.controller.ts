@@ -4,30 +4,18 @@ import {
   HttpResponseInit,
 } from "@azure/functions";
 import { BaseController } from "../../base-controller";
-import { STATUS_CODES } from "http";
-import { auth, controller, route } from "../../lib/decorators";
+import { controller, route } from "../../lib/decorators";
 
-@controller("protect")
-export class ProtectController implements BaseController {
-  @route("/protected", "POST")
-  @auth(["Alumno", "Docente Contratado"])
-  protected(
-    req: HttpRequest,
-    ctx: InvocationContext,
-  ): Promise<HttpResponseInit> {
-    return Promise.resolve({
-      status: 200,
-      jsonBody: { message: "acceso permitido" },
-    });
-  }
-
-  @route("/protected", "POST")
+@controller("login")
+export class LoginController implements BaseController {
+  @route("/", "GET")
   list(
     req: HttpRequest,
     context: InvocationContext,
   ): Promise<HttpResponseInit> {
     throw new Error("Method not implemented.");
   }
+
   getOne(
     req: HttpRequest,
     context: InvocationContext,
