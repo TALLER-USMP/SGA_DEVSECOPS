@@ -8,7 +8,7 @@ import { controller, route } from "../../lib/decorators";
 
 @controller("login")
 export class LoginController implements BaseController {
-  @route("/", "GET")
+  @route("/", "POST")
   list(
     req: HttpRequest,
     context: InvocationContext,
