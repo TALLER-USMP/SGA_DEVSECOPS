@@ -21,7 +21,6 @@ export class ProtectController implements BaseController {
     });
   }
 
-  @route("/protected", "POST")
   list(
     req: HttpRequest,
     context: InvocationContext,
