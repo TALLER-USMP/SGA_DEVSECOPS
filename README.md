@@ -155,3 +155,10 @@ manejamos
 - Framework de Controllers para Azure Functions
 
 - Clean Controller Pattern aplicado en entorno Serverless
+
+## Creacion de schema automatico con drizzle
+
+```powershell
+npx drizzle-kit introspect --config=drizzle.config.ts
+
+```

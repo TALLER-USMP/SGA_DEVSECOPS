@@ -12,7 +12,9 @@
     "format:write": "npx prettier . --write",
     "format:check": "npx prettier . --check",
     "test": "jest",
-    "prepare": "husky"
+    "prepare": "husky",
+    "db:generate": "drizzle-kit generate --config=drizzle.config.ts",
+    "db:migrate": "drizzle-kit migrate --config=drizzle.config.ts"
   },
   "dependencies": {
     "@azure/functions": "^4.0.0",

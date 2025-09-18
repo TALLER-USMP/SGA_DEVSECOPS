@@ -1,15 +1,17 @@
 import jwt from "jsonwebtoken";
 import jwksClient from "jwks-rsa";
 
+const tenantId = process.env.AZURE_TENANT_ID!;
+const audience = process.env.AZURE_AUDIENCE!;
+
 const client = jwksClient({
-  jwksUri:
-    "https://login.microsoftonline.com/98201fef-d9f6-4e68-84f5-c2705074e342/discovery/keys",
+  jwksUri: `https://login.microsoftonline.com/${tenantId}/discovery/keys`,
 });
 
 function getKey(header: jwt.JwtHeader, callback: jwt.SigningKeyCallback) {
   client.getSigningKey(header.kid, (err, key) => {
     const signingKey = key?.getPublicKey();
-    callback(null, signingKey);
+    callback(err, signingKey);
   });
 }
 
@@ -20,8 +22,8 @@ export function verifyToken(token: string): Promise<any> {
       getKey,
       {
         algorithms: ["RS256"],
-        audience: "api://3d7c6395-07ae-461b-82fb-4776ba1af653",
-        issuer: "https://sts.windows.net/98201fef-d9f6-4e68-84f5-c2705074e342/",
+        audience,
+        issuer: `https://sts.windows.net/${tenantId}/`,
       },
       (err, decoded) => {
         if (err) return reject(err);
