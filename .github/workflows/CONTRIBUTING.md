@@ -8,21 +8,14 @@ Este documento resume las convenciones que debe seguir el equipo al contribuir d
 
 Usamos **Conventional Commits**, lo que significa que cada mensaje de commit debe empezar con un tipo que indique qué tipo de cambio se hace.
 
-| Tipo       | Uso cuando…                                                      |
-|------------|------------------------------------------------------------------|
-| `feat`     | agregas una nueva funcionalidad                                  |
-| `fix`      | corriges un bug                                                  |
-| `style`    | solo hay cambios de formato (indentación, nombres, etc.)         |
-| `refactor` | refactorizas código sin agregar una nueva funcionalidad          |
-| `docs`     | modificas o agregas documentación                                |
-| `test`     | agregas o modificas pruebas                                      |
-| `chore`    | tareas de apoyo (scripts, configuraciones, pipelines, etc.)      |
+ Tipo       | Uso cuando…                                                      | Ejemplo                                                                 |
+|------------|------------------------------------------------------------------|-------------------------------------------------------------------------|
+| `feat`     | agregas una nueva funcionalidad                                  | `feat: Se agregó el módulo de reportes de ventas`                       |
+| `fix`      | corriges un bug                                                  | `fix: Se corrigió error en la validación de correos en el registro`     |
+| `style`    | solo hay cambios de formato (indentación, nombres, etc.)         | `style: Se ajustó la indentación en el componente de login`             |
+| `refactor` | refactorizas código sin agregar una nueva funcionalidad          | `refactor: Se simplificó la lógica de cálculo de descuentos`            |
+| `docs`     | modificas o agregas documentación                                | `docs: Se actualizó la guía de instalación en el README`                |
+| `test`     | agregas o modificas pruebas                                      | `test: Se añadieron pruebas unitarias para el servicio de pagos`        |
+| `chore`    | tareas de apoyo (scripts, configuraciones, pipelines, etc.)      | `chore: Se actualizó la configuración de Docker Compose`                |
 
-🔎 **Ejemplos válidos**
-**Formato sugerido:**  
-`{tipo} {DIA.MES.CORRELATIVO} : {descripción}`
-
-feat 12.08.00001 : Se agregó endpoint de métricas en usuarios
-feat 13.08.00002 : Se modificó el endpoint de métricas en usuarios para manejos individuales
-style 14.08.00003 : Se estandarizaron los estilos de los card
 
