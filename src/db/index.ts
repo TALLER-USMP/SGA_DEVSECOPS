@@ -8,7 +8,6 @@ export function getDb() {
     const pool = new Pool({
       connectionString: process.env.DATABASE_URL,
       ssl: {
-        requestCert: false,
         rejectUnauthorized: false,
       },
     });

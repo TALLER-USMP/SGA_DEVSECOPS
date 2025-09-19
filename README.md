@@ -136,6 +136,9 @@ npm -v
 
 ```powershell
 Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned
+
+npm uninstall azure-functions-core-tools
+npm install azure-functions-core-tools@4 --save-dev
 ```
 
 ---
@@ -152,3 +155,10 @@ manejamos
 - Framework de Controllers para Azure Functions
 
 - Clean Controller Pattern aplicado en entorno Serverless
+
+## Creacion de schema automatico con drizzle
+
+```powershell
+npx drizzle-kit introspect --config=drizzle.config.ts
+
+```

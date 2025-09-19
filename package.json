@@ -12,14 +12,19 @@
     "format:write": "npx prettier . --write",
     "format:check": "npx prettier . --check",
     "test": "jest",
-    "prepare": "husky"
+    "prepare": "husky",
+    "db:generate": "drizzle-kit generate --config=drizzle.config.ts",
+    "db:migrate": "drizzle-kit migrate --config=drizzle.config.ts"
   },
   "dependencies": {
     "@azure/functions": "^4.0.0",
     "dotenv": "^17.2.1",
     "drizzle-orm": "^0.44.5",
+    "jsonwebtoken": "^9.0.2",
+    "jwks-rsa": "^3.2.0",
     "pg": "^8.16.3",
-    "reflect-metadata": "^0.2.2"
+    "reflect-metadata": "^0.2.2",
+    "zod": "^4.1.5"
   },
   "devDependencies": {
     "@babel/core": "^7.28.3",
@@ -30,7 +35,6 @@
     "@types/jest": "^30.0.0",
     "@types/node": "18.x",
     "@types/pg": "^8.15.5",
-    "azure-functions-core-tools": "^4.x",
     "babel-jest": "^30.1.2",
     "drizzle-kit": "^0.31.4",
     "husky": "^9.1.7",
@@ -38,9 +42,9 @@
     "prettier": "3.6.2",
     "rimraf": "^5.0.0",
     "tsx": "^4.20.5",
-    "typescript": "^4.0.0"
+    "typescript": "^5.9.2"
   },
-  "*.{ts,js,json,yml,yaml,md}": [
+  "*.{ts,js,json,yml,yaml,md,cts}": [
     "eslint --fix",
     "prettier --write"
   ]
