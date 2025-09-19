@@ -1,3 +1,4 @@
+ISSUE TEMPLATE
 ---
 name: SGA Task
 description: Registrar tarea, mejora o bug para la prueba de concepto
@@ -26,4 +27,5 @@ _¿Qué se debe realizar?_
 
 ### 📎 Notas adicionales
 _Agregar cualquier detalle extra, enlace o imagen que ayude a entender mejor la tarea_
+
 
