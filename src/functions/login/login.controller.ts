@@ -18,7 +18,9 @@ export class LoginController implements BaseController {
     request: HttpRequest,
     context: InvocationContext,
   ): Promise<HttpResponseInit> {
-    const authHeader = request.headers.get("authorization");
+    const authHeader =
+      request.headers.get("authorization") ||
+      request.headers.get("Authorization");
     if (!authHeader || !authHeader.startsWith("Bearer ")) {
       context.log("No authorization header");
       return {
@@ -33,7 +35,7 @@ export class LoginController implements BaseController {
       const session = await AuthServiceS.login(token);
 
       return {
-        status: 200,
+        status: STATUS_CODES.OK,
         jsonBody: {
           message: "Login successful",
           user: session,
@@ -43,7 +45,7 @@ export class LoginController implements BaseController {
       {
         context.log("Error verifying token:", err);
         return {
-          status: 401,
+          status: STATUS_CODES.UNAUTHORIZED,
           jsonBody: { message: "Token de autorización inválido" },
         };
       }

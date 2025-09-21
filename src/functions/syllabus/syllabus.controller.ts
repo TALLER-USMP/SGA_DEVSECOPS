@@ -10,6 +10,7 @@ import { STATUS_CODES } from "../../status-codes";
 @controller("syllabus")
 export class SyllabusController implements BaseController {
   @route("/")
+  @auth(["admin", "profesor"])
   async list(
     req: HttpRequest,
     context: InvocationContext,
