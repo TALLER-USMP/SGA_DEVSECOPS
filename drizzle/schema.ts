@@ -99,7 +99,7 @@ export const silaboFuente = pgTable(
     silaboId: integer("silabo_id").notNull(),
     tipo: varchar().notNull(),
     autores: varchar(),
-    anio: integer(),
+    anio: integer(), //El nombre de este campo no coincide con el de la base de datos (año)
     titulo: text(),
     editorialRevista: varchar("editorial_revista"),
     ciudad: varchar(),
