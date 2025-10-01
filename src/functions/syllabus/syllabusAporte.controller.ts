@@ -76,7 +76,7 @@ export class SyllabusAporteController implements BaseController {
       };
     }
 
-    // Validación de aporteValor
+    // Validación de aporteValor-Ejecucion
     if (
       body.aporteValor &&
       body.aporteValor !== "K" &&
