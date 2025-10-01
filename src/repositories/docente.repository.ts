@@ -8,6 +8,7 @@ export type AsignaturaRow = {
   cursoNombre: string | null;
   ciclo: string | null;
   semestreAcademico: string | null;
+  docentesText: string | null;
 };
 
 export class DocenteRepository {
@@ -24,6 +25,7 @@ export class DocenteRepository {
         cursoNombre: silabo.cursoNombre,
         ciclo: silabo.ciclo,
         semestreAcademico: silabo.semestreAcademico,
+        docentesText: silabo.docentesText,
       })
       .from(silabo);
 
@@ -32,7 +34,7 @@ export class DocenteRepository {
 
   // Lista de asignaturas por docente
   async findAsignaturasByDocenteId(
-    docenteId: number
+    docenteId: number,
   ): Promise<AsignaturaRow[]> {
     if (!this.db) throw new Error("Database connection is not initialized.");
 
@@ -43,6 +45,7 @@ export class DocenteRepository {
         cursoNombre: silabo.cursoNombre,
         ciclo: silabo.ciclo,
         semestreAcademico: silabo.semestreAcademico,
+        docentesText: silabo.docentesText,
       })
       .from(silabo)
       .where(eq(silabo.asignadoAUsuarioAutorizadoId, docenteId));
