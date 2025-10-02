@@ -1,0 +1,16 @@
+# CODEOWNERS
+# Este archivo define los propietarios de código para revisiones automáticas en pull requests
+# Más información: https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners
+
+# CONFIGURACIÓN POR FLUJO DE RAMAS:
+# dev → QA: @JeanClix @JeanVentura10
+# QA → main: @carlofav12 @JeanClix
+
+# Regla global para todos los archivos
+* @JeanClix @JeanVentura10 @carlofav12
+
+# Configuración específica por tipos de archivos
+/src/ @JeanClix @JeanVentura10
+/drizzle/ @JeanClix @JeanVentura10
+*.ts @JeanClix @JeanVentura10
+*.js @carlofav12
